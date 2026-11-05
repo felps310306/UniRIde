@@ -6,7 +6,9 @@ Projeto acadêmico de consulta de transporte público para chegar às instituiç
 
 ### [Abrir o UniRide](https://uniride-campus-brasilia-lf.lipibcg.chatgpt.site/)
 
-**Acesso privado:** a hospedagem exige login do proprietário no ChatGPT. Publicar este link no GitHub não concede acesso a outras contas. Essa restrição foi mantida por escolha do responsável pelo projeto.
+**Acesso público:** desde 05/11/2026, qualquer pessoa com o link pode abrir o UniRide sem login. O site e a API foram verificados por requisições anônimas.
+
+A hospedagem do ChatGPT Sites está atualmente incluída nos planos Plus e Pro. Não há garantia contratual registrada neste projeto de disponibilidade até dezembro de 2026; a continuidade depende das condições da plataforma e da fonte SEMOB. [Condições atuais do Sites](https://help.openai.com/en/articles/20001339-creating-and-using-chatgpt-sites).
 
 A demonstração hospedada consulta dados públicos da SEMOB/DF: linhas próximas aos campi, paradas da região, traçados, horários programados e posições recentes dos ônibus. Horários de saída não são previsões de chegada à parada. Não há reserva de lugar nem informação de vagas.
 
