@@ -25,4 +25,6 @@ O link acima é a demonstração hospedada do projeto. O acesso e a disponibilid
 - [14 instituições, 29 campi e unidades adicionais pendentes](COBERTURA.md)
 - [Fontes da pesquisa dos campi](CAMPI-PESQUISA.md)
 
-A lista de instituições inclui UnB, UniCEUB, Católica (UCB), UDF, IESB, UNIP, UNIPLAN, Projeção, Estácio, Anhanguera, IFB, UnDF/ESCS, Senac-DF e Unieuro. Cada consulta é limitada às linhas no entorno do campus escolhido.
+A lista de instituições inclui UnB, UniCEUB, Católica (UCB), UDF, IESB, UNIP, UNIPLAN, Projeção, Estácio, Anhanguera, IFB, UnDF/ESCS, Senac-DF e Unieuro. A consulta parte da localização do usuário: mostra paradas próximas à origem e linhas cujo mesmo traçado também passa perto do campus escolhido. Não calcula baldeações nem garante a associação entre uma parada e uma linha.
+
+[Localização do usuário e limites de planejamento](ORIGEM.md).

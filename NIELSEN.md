@@ -1,5 +1,8 @@
 # Aplicação das 10 heurísticas de Nielsen
 
+Atualização de 05/11/2026: a consulta online agora parte da localização do usuário. Paradas são próximas da origem; linhas passam perto da origem e do campus. Veja [fluxo e limites de localização](ORIGEM.md).
+
+
 Revisão de implementação: 05/11/2026. Referência conceitual: Jakob Nielsen, [10 Usability Heuristics for User Interface Design](https://www.nngroup.com/articles/ten-usability-heuristics/), Nielsen Norman Group. A tabela registra decisões e evidências do UniRide; não é certificação de usabilidade nem substitui testes com estudantes.
 
 | Heurística | Aplicação concreta no UniRide | Como verificar |
@@ -23,6 +26,6 @@ A consulta inclui 14 instituições e 29 campi com referência geográfica: [cob
 
 Os painéis contêm o foco, deixam o restante da aplicação inerte e devolvem o foco ao controle de origem. Abas usam setas, Home/End, seleção e painel associado. Paginação identifica a página atual. Há rótulos de botões, foco visível, atalho para conteúdo e respeito à preferência por movimento reduzido. Controles principais no celular têm área de toque ampliada.
 
-Treze testes automatizados cobrem calendário, geografia, validade de GPS, navegação, integridade dos campi, migração de favoritos, escopo da API e cache. Verificação visual local: abertura/fechamento do seletor, favoritos e Desfazer, histórico mantendo busca, detalhe, ajuda e responsividade. A disponibilidade da SEMOB e a distribuição dos campi foram verificadas por consultas reais.
+Dezessete testes automatizados cobrem calendário, geografia, validade de GPS, navegação, integridade dos campi, migração de favoritos, escopo da API e cache. Verificação visual local: abertura/fechamento do seletor, favoritos e Desfazer, histórico mantendo busca, detalhe, ajuda e responsividade. A disponibilidade da SEMOB e a distribuição dos campi foram verificadas por consultas reais.
 
 Ainda é recomendável validar tarefas com estudantes: encontrar a faculdade, escolher a linha e interpretar a partida. Isso pode revelar dificuldades que uma inspeção do código e da interface não detecta. Não se afirma conformidade integral com WCAG, nem ausência de todos os problemas de usabilidade.
