@@ -16,3 +16,11 @@ A demonstração hospedada consulta dados públicos da SEMOB/DF: linhas próxima
 - `backend/`: aplicação Spring Boot.
 
 O link acima é a demonstração hospedada do projeto. O acesso e a disponibilidade dos dados dependem, respectivamente, da hospedagem e da fonte SEMOB.
+
+## Usabilidade e cobertura da demonstração
+
+- [Aplicação das 10 heurísticas de Nielsen](NIELSEN.md)
+- [14 instituições, 29 campi e unidades adicionais pendentes](COBERTURA.md)
+- [Fontes da pesquisa dos campi](CAMPI-PESQUISA.md)
+
+A lista de instituições inclui UnB, UniCEUB, Católica (UCB), UDF, IESB, UNIP, UNIPLAN, Projeção, Estácio, Anhanguera, IFB, UnDF/ESCS, Senac-DF e Unieuro. Cada consulta é limitada às linhas no entorno do campus escolhido.
