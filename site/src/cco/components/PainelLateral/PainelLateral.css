@@ -1,0 +1,285 @@
+.painel-lateral-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: flex;
+    justify-content: flex-end;
+    background: rgba(0, 0, 0, 0.35);
+    animation: painel-lateral-fundo 0.2s ease;
+}
+
+.painel-lateral {
+    width: min(360px, 100vw);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    background: var(--bg-elevated);
+    color: var(--text);
+    border-left: 1px solid var(--overlay-border);
+    box-shadow: -12px 0 32px rgba(0, 0, 0, 0.3);
+    outline: none;
+    animation: painel-lateral-entrar 0.24s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.painel-lateral-cabecalho {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 16px 18px 14px;
+    border-bottom: 1px solid var(--overlay-border);
+}
+
+.painel-lateral-cabecalho h2 {
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.painel-lateral-cabecalho h2 svg { font-size: 18px; color: var(--text-muted); }
+
+.painel-lateral-fechar {
+    display: flex;
+    align-items: center;
+    padding: 4px;
+    border: none;
+    border-radius: 6px;
+    background: none;
+    color: var(--text-muted);
+    font-size: 18px;
+    cursor: pointer;
+    transition: color 0.15s, background 0.15s;
+}
+
+.painel-lateral-fechar:hover { color: var(--text); background: var(--overlay-strong); }
+
+.painel-lateral-corpo {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    scrollbar-width: thin;
+}
+
+.painel-lateral-rodape {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    padding: 14px 18px;
+    border-top: 1px solid var(--overlay-border);
+}
+
+/* Campos de formulário dentro do painel */
+.painel-lateral-campo {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    min-width: 0;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-muted);
+}
+
+.painel-lateral-par {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+/* Campo + botão na mesma linha (ex.: coluna da ordenação e direção) */
+.painel-lateral-linha {
+    display: flex;
+    gap: 8px;
+}
+
+.painel-lateral-linha select { flex: 1; min-width: 0; }
+
+.painel-lateral-direcao {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    height: 38px;
+    white-space: nowrap;
+}
+
+.painel-lateral-direcao svg { font-size: 11px; color: var(--accent); }
+
+.painel-lateral-divisor {
+    width: 100%;
+    margin: 2px 0;
+    border: 0;
+    border-top: 1px solid var(--overlay-border);
+}
+
+.painel-lateral-campo input,
+.painel-lateral-campo select {
+    width: 100%;
+    height: 38px;
+    box-sizing: border-box;
+    padding: 8px 12px;
+    border: 1px solid var(--overlay-border);
+    border-radius: 8px;
+    background: var(--bg);
+    color: var(--text);
+    font: inherit;
+    font-size: 13px;
+}
+
+.painel-lateral-campo select {
+    appearance: none;
+    padding-right: 32px;
+    cursor: pointer;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12' fill='none'%3E%3Cpath d='M2 4L6 8L10 4' stroke='%239ca3af' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+}
+
+.painel-lateral-campo select option { background: var(--bg-elevated); color: var(--text); }
+
+.painel-lateral-campo input:focus,
+.painel-lateral-campo select:focus {
+    outline: none;
+    border-color: var(--accent);
+}
+
+.painel-lateral-campo .react-datepicker-wrapper { width: 100%; }
+.painel-lateral-campo .react-datepicker__input-container input { padding-right: 28px; }
+
+/* Calendário renderizado fora do painel (portalId) para não ser cortado pela rolagem. */
+#painel-lateral-calendario .react-datepicker-popper { z-index: 1100; }
+
+.painel-lateral-btn {
+    padding: 8px 14px;
+    border: 1px solid var(--overlay-border);
+    border-radius: 8px;
+    background: transparent;
+    color: var(--text);
+    font: inherit;
+    font-size: 13px;
+    cursor: pointer;
+}
+
+.painel-lateral-btn:hover:not(:disabled) { background: var(--overlay-strong); }
+.painel-lateral-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.painel-lateral-btn.primario {
+    border-color: var(--accent);
+    background: var(--accent);
+    color: #fff;
+    font-weight: 500;
+}
+
+.painel-lateral-btn.primario:hover:not(:disabled) { background: var(--accent-strong); }
+
+/* Barra compacta com o botão Filtros e os filtros em uso */
+.filtros-barra {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    flex-shrink: 0;
+    min-height: 34px;
+}
+
+.filtros-botao {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    height: 34px;
+    padding: 0 12px;
+    border: 1px solid var(--overlay-border);
+    border-radius: 8px;
+    background: var(--bg-elevated);
+    color: var(--text);
+    font: inherit;
+    font-size: 13px;
+    cursor: pointer;
+    transition: border-color 0.15s;
+}
+
+.filtros-botao svg { font-size: 16px; color: var(--text-muted); }
+.filtros-botao:hover,
+.filtros-botao.ativo { border-color: var(--accent); }
+.filtros-botao.ativo svg { color: var(--accent); }
+
+.filtros-qtd {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 18px;
+    height: 18px;
+    padding: 0 5px;
+    box-sizing: border-box;
+    border-radius: 9px;
+    background: var(--accent);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.filtros-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    max-width: 280px;
+    height: 28px;
+    padding: 0 4px 0 10px;
+    box-sizing: border-box;
+    border: 1px solid var(--overlay-border);
+    border-radius: 14px;
+    background: var(--overlay-weak);
+    color: var(--text-muted);
+    font-size: 12px;
+    white-space: nowrap;
+}
+
+.filtros-chip strong {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: var(--text);
+    font-weight: 500;
+}
+
+.filtros-chip button {
+    display: flex;
+    flex-shrink: 0;
+    padding: 3px;
+    border: 0;
+    border-radius: 50%;
+    background: none;
+    color: var(--text-muted);
+    font-size: 13px;
+    cursor: pointer;
+}
+
+.filtros-chip button:hover { color: var(--text); background: var(--overlay-strong); }
+
+.filtros-barra-extra {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-left: auto;
+    color: var(--text-muted);
+    font-size: 12px;
+}
+
+@keyframes painel-lateral-entrar {
+    from { transform: translateX(100%); }
+    to { transform: none; }
+}
+
+@keyframes painel-lateral-fundo {
+    from { opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .painel-lateral,
+    .painel-lateral-overlay { animation: none; }
+}

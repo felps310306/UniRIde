@@ -1,0 +1,47 @@
+.paginacao {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.paginacao button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 24px;
+  color: var(--text);
+}
+
+.paginacao button:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.paginas-numeros {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.paginas-numeros button {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 5px 8px;
+  transition: 0.2s;
+  color: var(--text);
+
+}
+
+.paginas-numeros button:hover {
+  color: var(--text);
+}
+
+.paginas-numeros button.ativo {
+  color: var(--text);
+  font-weight: bold;
+  border-bottom: 2px solid var(--bg);
+}

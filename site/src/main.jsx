@@ -1,0 +1,10 @@
+import React from 'react';
+import { createRoot } from 'react-dom/client';
+import App from './App.jsx';
+import { ThemeProvider } from './cco/ThemeContext.jsx';
+import ErrorBoundary from './cco/ErrorBoundary.jsx';
+import './cco/Campos.css';
+import './app.css';
+import './design.css';
+createRoot(document.getElementById('app')).render(<ErrorBoundary><ThemeProvider><App/></ThemeProvider></ErrorBoundary>);
+document.querySelector('.skip-link')?.addEventListener('click',event=>{event.preventDefault();document.getElementById('main')?.focus();});

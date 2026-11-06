@@ -1,0 +1,53 @@
+/* Defaults leves: a geometria pertence a cada componente. */
+:where(input, select, textarea) { box-sizing:border-box; font-family:inherit; color:var(--text,#1f2937); }
+:where(input[type=text],input[type=search],input[type=email],input[type=password],input[type=number],input[type=date],input[type=time],input[type=tel],input[type=url],input:not([type]),select,textarea) {
+  border:1px solid var(--border,#cbd5e1); border-radius:6px; background-color:var(--bg-elevated,#fff); padding:7px 10px; font-size:13px;
+}
+:where(input,select,textarea):focus-visible { outline:2px solid var(--accent,#4f6ef7); outline-offset:2px; }
+:where(input,textarea)::placeholder { color:var(--text-muted,#64748b); opacity:1; }
+:where(input,select,textarea):disabled { cursor:not-allowed; opacity:.6; }
+:where(select) { appearance:auto; }
+:where(option,optgroup) { background-color:var(--bg-elevated,#fff); color:var(--text,#1f2937); }
+:where(option:checked) { background-color:var(--accent-soft,#dbeafe); color:var(--text,#1f2937); }
+:where(input[type=checkbox],input[type=radio]) { accent-color:var(--accent,#4f6ef7); }
+:root { color-scheme:light; --scroll-thumb:#9aa3b2; --scroll-hover:#68758b; }
+:root[data-theme=dark] { color-scheme:dark; --scroll-thumb:#515b6d; --scroll-hover:#738099; }
+:where(*) { scrollbar-width:thin; scrollbar-color:var(--scroll-thumb) transparent; }
+::-webkit-scrollbar { width:8px; height:8px; }
+::-webkit-scrollbar-track, ::-webkit-scrollbar-corner { background:transparent; }
+::-webkit-scrollbar-thumb { background:var(--scroll-thumb); border:2px solid transparent; border-radius:10px; background-clip:padding-box; }
+::-webkit-scrollbar-thumb:hover { background-color:var(--scroll-hover); }
+#relatorios-datepicker-portal { position:relative; z-index:11020; }
+#relatorios-datepicker-portal .react-datepicker-popper { z-index:11020; }
+.react-datepicker.cco-calendario { background:var(--bg-elevated,#fff); border:1px solid var(--border,#cbd5e1); border-radius:12px; font-family:inherit; color:var(--text); box-shadow:0 8px 24px #0003; overflow:hidden; }
+.cco-calendario .react-datepicker__header { background:var(--bg-elevated); border-bottom:1px solid var(--border); padding-top:12px; }
+.cco-calendario :is(.react-datepicker__current-month,.react-datepicker__day-name,.react-datepicker-time__header,.react-datepicker__day,.react-datepicker__month-text,.react-datepicker__year-text) { color:var(--text); }
+.cco-calendario .react-datepicker__day:hover:not(.react-datepicker__day--disabled) { background:var(--overlay-weak); border-radius:6px; }
+.cco-calendario :is(.react-datepicker__day--selected,.react-datepicker__day--in-range,.react-datepicker__day--keyboard-selected) { background:var(--accent,#4f6ef7); color:white; border-radius:6px; }
+.cco-calendario .react-datepicker__day--outside-month { color:var(--text-muted); }
+.cco-calendario .react-datepicker__day--disabled { opacity:.35; cursor:not-allowed; }
+.cco-calendario .react-datepicker__navigation-icon::before { border-color:var(--text-muted); }
+.cco-calendario :is(.react-datepicker__month-select,.react-datepicker__year-select) { background-color:var(--overlay-weak); border:1px solid var(--border); color:var(--text); padding:5px 28px 5px 8px; border-radius:7px; }
+
+/* Tema consistente também para controles nativos e listas abertas. */
+:root { color-scheme: dark; --scroll-thumb: #515b6d; --scroll-hover: #738099; }
+:root[data-theme="light"] { color-scheme: light; --scroll-thumb: #9aa3b2; --scroll-hover: #68758b; }
+select:not([multiple]):not([size]) {
+  appearance: none !important;
+  padding-right: 32px !important;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='m1 1 5 5 5-5' fill='none' stroke='%23949ca8' stroke-width='1.7' stroke-linecap='round'/%3E%3C/svg%3E") !important;
+  background-position: right 10px center !important;
+  background-repeat: no-repeat !important;
+  background-size: 12px 8px !important;
+}
+select, select option, select optgroup { color: var(--text); background-color: var(--bg-elevated); }
+select option:checked { color: var(--text); background-color: var(--overlay-strong); }
+/* Chromium recente permite estilizar também o popup sem substituir o select. */
+@supports (appearance: base-select) {
+  select:not([multiple]):not([size]), select:not([multiple]):not([size])::picker(select) { appearance: base-select !important; }
+  select:not([multiple]):not([size])::picker-icon { display: none; }
+  select::picker(select) { background: var(--bg-elevated); color: var(--text); border: 1px solid var(--border); border-radius: 12px; padding: 6px; box-shadow: 0 8px 24px #0003; max-height: min(380px, 55vh); overflow: auto; }
+  select option { padding: 9px 12px; border-radius: 7px; white-space: normal; }
+  select option:hover, select option:focus, select option:checked { background: var(--overlay-strong); color: var(--text); }
+}
+* { scrollbar-color: var(--scroll-thumb) transparent; scrollbar-width: thin; }
