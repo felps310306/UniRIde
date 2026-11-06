@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { FiArrowLeft, FiArrowRight, FiSearch, FiHeart, FiRefreshCw, FiMapPin, FiClock, FiInfo, FiX, FiMap, FiList, FiWifiOff, FiHelpCircle, FiSun, FiMoon } from 'react-icons/fi';
+import { FiArrowLeft, FiArrowRight, FiSearch, FiHeart, FiRefreshCw, FiMapPin, FiClock, FiInfo, FiX, FiMap, FiList, FiWifiOff, FiHelpCircle, FiSun, FiMoon, FiChevronLeft, FiChevronRight } from 'react-icons/fi';
 import { TbBus } from 'react-icons/tb';
 import NavBar from './cco/NavBar.jsx';
 import { useTheme } from './cco/ThemeContext.jsx';
@@ -30,6 +30,7 @@ export default function App(){
   const [query,setQuery]=useState(''),[target,setTarget]=useState(null),[tab,setTab]=useState('linhas'),[mobileView,setMobileView]=useState('lista'),[info,setInfo]=useState(false),[toast,setToast]=useState(null),[pagination,setPagination]=useState(0),[favorites,setFavorites]=useState(readFavorites),[clock,setClock]=useState(Date.now()),[date,setDate]=useState(todayBrasilia),[direction,setDirection]=useState(''),[online,setOnline]=useState(navigator.onLine);
   const searchRef=useRef(null),tabsRef=useRef([]),lastLineRef=useRef(null);
   const {tema,alternarTema}=useTheme();
+  const [panelOpen,setPanelOpen]=useState(true);
   const {page,campusId,line:lineCode}=route;
   const campus=CAMPUSES.find(c=>c.id===campusId);
   const changeRoute=(update,{replace=false}={})=>{const next={...route,...update};setRoute(next);history[replace?'replaceState':'pushState']({uniride:true},'',routeHash(next));};
@@ -47,7 +48,7 @@ export default function App(){
   useEffect(()=>{const timer=setInterval(()=>setClock(Date.now()),5000);return()=>clearInterval(timer);},[]);
   useEffect(()=>{const update=()=>setOnline(navigator.onLine);window.addEventListener('online',update);window.addEventListener('offline',update);return()=>{window.removeEventListener('online',update);window.removeEventListener('offline',update);};},[]);
   useEffect(()=>{if(!toast)return;const timer=setTimeout(()=>setToast(null),toast.acao?12000:5000);return()=>clearTimeout(timer);},[toast]);
-  useEffect(()=>{const shortcut=e=>{if(e.altKey && e.key.toLowerCase()==='b' && !info && !document.getElementById('app').inert){e.preventDefault();if(lineCode){changeRoute({line:null});setTimeout(()=>searchRef.current?.focus(),0);}else searchRef.current?.focus();}};window.addEventListener('keydown',shortcut);return()=>window.removeEventListener('keydown',shortcut);},[lineCode,route,info]);
+  useEffect(()=>{const shortcut=e=>{if(e.altKey && e.key.toLowerCase()==='b' && !info && !document.getElementById('app').inert){e.preventDefault();setPanelOpen(true);if(lineCode)changeRoute({line:null});setTimeout(()=>searchRef.current?.focus(),0);}};window.addEventListener('keydown',shortcut);return()=>window.removeEventListener('keydown',shortcut);},[lineCode,route,info]);
   const navigate=p=>{setMobileView('lista');changeRoute({page:p,line:null});};
   const chooseCampus=id=>changeRoute({campusId:id,line:null});
   const chooseOrigin=value=>{setOrigin(value);setTab('paradas');setQuery('');setPagination(0);setTarget(null);setMobileView('lista');changeRoute({line:null});};
@@ -84,8 +85,8 @@ export default function App(){
         <div className="header-tools"><button className="icon-btn" aria-label="Ajuda e fontes" title="Ajuda e fontes" onClick={()=>setInfo(true)}><FiHelpCircle/></button><button className="icon-btn" aria-label={tema==='dark'?'Usar tema claro':'Usar tema escuro'} title={tema==='dark'?'Tema claro':'Tema escuro'} onClick={alternarTema}>{tema==='dark'?<FiSun/>:<FiMoon/>}</button></div>
       </header>
       {offline?<div className="offline-banner"><FiWifiOff/><span>Apresentação · amostra de {timestamp(catalog.data?.fetchedAt)}. Para dados atuais, <a href={SITE_URL}>abra a versão online</a>.</span></div>:!online && <div className="connection-banner" role="status"><FiWifiOff/>Sem conexão. As informações já carregadas continuam disponíveis. Reconecte para atualizar.</div>}
-      <main id="main" tabIndex={-1} className={`workspace ${!showMap?'table-mode':''} mobile-${mobileView}`}>
-        <aside className={`consultation-panel ${origin?'has-origin':''} ${selected?'has-detail':''}`} aria-label="Consulta de linhas">
+      <main id="main" tabIndex={-1} className={`workspace ${!showMap?'table-mode':''} ${showMap&&!panelOpen?'panel-collapsed':''} mobile-${mobileView}`}>
+        <aside id="consultation-panel" className={`consultation-panel ${origin?'has-origin':''} ${selected?'has-detail':''}`} aria-label="Consulta de linhas">
           <div className="panel-top"><div className="panel-heading"><span className="small-label">Seu caminho até o campus</span><h1>{page==='favoritos'?'Linhas favoritas':page==='linhas'?'Linhas para o campus':'Chegar à faculdade'}</h1></div><button className="icon-btn" title="Atualizar consulta" aria-label="Atualizar consulta" disabled={needsOrigin||catalog.loading||offline||!online} onClick={refresh}><FiRefreshCw className={catalog.loading?'refreshing':''}/></button></div>
           <div className="journey-fields"><OriginPicker origin={origin} onChange={chooseOrigin} offline={offline}/>
           <CampusPicker campus={campus} onChange={chooseCampus}/></div>
@@ -126,6 +127,7 @@ export default function App(){
           </>}
           <footer className="panel-footer"><span><FiInfo/>SEMOB/DF · {timestamp((selected?detail.data:catalog.data)?.fetchedAt)}</span><button className="text-button" onClick={()=>setInfo(true)}>Ajuda e fontes</button></footer>
         </aside>
+        {showMap&&<button className="panel-toggle" aria-controls="consultation-panel" aria-expanded={panelOpen} aria-label={panelOpen?'Recolher painel e ampliar o mapa':'Mostrar painel de consulta'} title={panelOpen?'Recolher painel':'Mostrar painel'} onClick={()=>setPanelOpen(v=>!v)}>{panelOpen?<FiChevronLeft/>:<FiChevronRight/>}</button>}
         {showMap&&<MapView campus={campus} origin={origin} stops={catalog.data?.stops} routes={permitted&&detail.data?.code===lineCode?mappedRoutes:null} positions={live} line={permitted?lineCode:null} target={target} offline={offline}/>}
         {showMap&&<button className="mobile-switch btn" onClick={()=>setMobileView(v=>v==='mapa'?'lista':'mapa')}>{mobileView==='mapa'?<FiList/>:<FiMap/>}{mobileView==='mapa'?'Ver lista':'Ver mapa'}</button>}
       </main>

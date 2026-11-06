@@ -81,9 +81,9 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 .icon-btn:hover {background:var(--hover); color:var(--text)}
 
 /* Área de trabalho: painel encaixado e mapa de borda a borda */
-.workspace {padding:0; gap:0}
+.workspace {--panel-w:400px; padding:0; gap:0}
 .consultation-panel {
-  width:400px; margin:0; border:0; border-right:1px solid var(--hairline); border-radius:0;
+  width:var(--panel-w); margin:0; border:0; border-right:1px solid var(--hairline); border-radius:0;
   box-shadow:none; background:var(--surface); position:relative; z-index:2; overflow:hidden;
 }
 .panel-top {padding:28px var(--gutter) 20px; align-items:flex-start; gap:16px}
@@ -326,10 +326,26 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
   .origin-current+.origin-actions .locate-button:not(:disabled):hover {background:var(--hover); border-color:var(--border); color:var(--text)}
 }
 
+/* Painel recolhível no mapa (computador): o mapa ocupa a largura liberada */
+.panel-toggle {display:none}
+@media (min-width:761px) {
+  .consultation-panel {transition:margin-left 260ms var(--ease), visibility 0s}
+  .panel-toggle {
+    display:flex; align-items:center; justify-content:center; position:absolute; z-index:750;
+    top:50%; left:var(--panel-w); transform:translateY(-50%); width:24px; height:52px; padding:0;
+    border:1px solid var(--hairline); border-left:0; border-radius:0 8px 8px 0;
+    background:var(--surface); color:var(--text-muted); font-size:17px; box-shadow:var(--shadow-float);
+    transition:left 260ms var(--ease), color 160ms var(--ease), background-color 160ms var(--ease);
+  }
+  .panel-toggle:hover {color:var(--text); background:var(--hover)}
+  .panel-collapsed .consultation-panel {margin-left:calc(-1 * var(--panel-w)); visibility:hidden; transition:margin-left 260ms var(--ease), visibility 0s 260ms}
+  .panel-collapsed .panel-toggle {left:0}
+}
+
 /* Telas largas */
 @media (min-width:1600px) {
   :root {--gutter:28px}
-  .consultation-panel {width:440px}
+  .workspace {--panel-w:440px}
 }
 
 /* Notebooks menores */
@@ -337,7 +353,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
   :root {--gutter:20px}
   .navbar {margin-left:24px}
   .navbar-item, .navbar-item:hover, .navbar-item.active {padding:0 10px}
-  .consultation-panel {width:360px}
+  .workspace {--panel-w:360px}
   .map-legend {display:none}
   .table-mode {padding:24px}
   .table-mode .line-description {align-items:flex-start; gap:4px}
