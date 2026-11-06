@@ -15,7 +15,7 @@ export async function wfs(layer, params = {}, fetcher = fetch) {
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), 22000);
   try {
-    const response = await fetcher(url, { signal:controller.signal,headers:{ Accept:'application/json','User-Agent':'UniRideCampus/0.2 (+https://uniride-campus-brasilia-lf.lipibcg.chatgpt.site)' } });
+    const response = await fetcher(url, { signal:controller.signal,headers:{ Accept:'application/json','User-Agent':'UniRideCampus/0.2 (+https://uniride-kappa.vercel.app)' } });
     if (!response.ok) throw new ProviderError('A SEMOB está indisponível no momento. Tente novamente.');
     const data = await response.json();
     if (data.type !== 'FeatureCollection' || !Array.isArray(data.features)) throw new ProviderError('A SEMOB retornou uma resposta não reconhecida.');

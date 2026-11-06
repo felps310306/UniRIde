@@ -4,7 +4,7 @@ Consulta de transporte público para 14 instituições e 29 campi do Distrito Fe
 
 ## Abrir e apresentar
 
-- **Versão completa:** https://uniride-campus-brasilia-lf.lipibcg.chatgpt.site — pública, sem login. Use Minha localização ou marque a origem no mapa e escolha o campus de destino.
+- **Versão completa:** https://uniride-kappa.vercel.app — pública, sem login. Use Minha localização ou marque a origem no mapa e escolha o campus de destino.
 - **Arquivo local:** dê dois cliques em `../APRESENTAR-UNIRIDE.html` ou neste `index.html`. É uma amostra datada com linhas reais selecionadas de cada campus, trajetos e horários salvos. Sem servidor, não consulta a API nem carrega o mapa-base; as camadas vetoriais continuam disponíveis. Uma faixa informa essa diferença. O arquivo é independente, sem arquivos JS/CSS externos.
 - **Aplicação completa no computador:** instale Node.js 20.10+; nesta pasta execute `npm ci` e `npm start`. Abra http://127.0.0.1:4173. A API é consultada pelo servidor local.
 
@@ -54,7 +54,8 @@ Edite `src/` e `server/`; `index.html`, `APRESENTAR-UNIRIDE.html` e `dist/` são
 | `server/semob.js`, `server/journey.js` | Adaptador WFS, consulta por origem e endpoints de linhas/posições |
 | `src/OriginPicker.jsx`, `src/origin.js` | Permissão de localização, seleção manual e validação |
 | `server/cache.js` | Cache em memória por processo/isolate e deduplicação de consultas |
-| `worker/index.js` | HTML e API na hospedagem Cloudflare Workers/Sites |
+| `worker/index.js` | HTML e API em formato Worker (base da publicação) |
+| `api/app.js`, `vercel.json` | Publicação na Vercel: página estática e API como função na região de São Paulo (gru1) |
 | `scripts/serve.mjs` | Mesmo adaptador no servidor Node local |
 | `docs/DIAGNOSTICO.md` | Revisão do Escala, decisões e limitações |
 | `docs/API-SEMOB.md` | Pesquisa da fonte, contratos e referências oficiais |

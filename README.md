@@ -2,7 +2,7 @@
 
 Aplicação acadêmica de consulta de transporte público para chegar às faculdades do Distrito Federal. Escolha de onde você sai e o campus de destino para encontrar paradas próximas e linhas que passam perto dos dois pontos.
 
-**[Abrir o UniRide — site público, sem login](https://uniride-campus-brasilia-lf.lipibcg.chatgpt.site/)**
+**[Abrir o UniRide — site público, sem login](https://uniride-kappa.vercel.app/)**
 
 ![Tela do UniRide](docs/uniride.png)
 
@@ -34,7 +34,7 @@ Para apresentar usando apenas um arquivo, abra [APRESENTAR-UNIRIDE.html](APRESEN
 
 ## Código e arquitetura
 
-A pasta **`site/` contém o código completo da versão hospedada**: React, mapa Leaflet/OpenStreetMap, adaptador da SEMOB e servidor local. A publicação usa um Worker com a mesma API. A estrutura inicial do trabalho (React em `frontend/` e Spring Boot em `backend/`) foi removida do repositório e continua disponível no histórico de commits.
+A pasta **`site/` contém o código completo da versão hospedada**: React, mapa Leaflet/OpenStreetMap, adaptador da SEMOB e servidor local. A publicação na Vercel usa o mesmo servidor do build, como função na região de São Paulo. A estrutura inicial do trabalho (React em `frontend/` e Spring Boot em `backend/`) foi removida do repositório e continua disponível no histórico de commits.
 
 | Pasta ou arquivo | Conteúdo |
 | --- | --- |
@@ -79,6 +79,12 @@ A origem é usada na consulta e permanece apenas na memória da página; não é
 
 ## Hospedagem
 
-O link é público e não depende de manter este computador ligado. Em consulta à [documentação oficial do Sites](https://learn.chatgpt.com/docs/sites) em 06/11/2026, a hospedagem está gratuita até **31/12/2026**. A partir de 01/01/2027, a política anunciada prevê medição de uso e cobrança de excedentes à franquia do plano. Isso não é garantia de disponibilidade contínua; o funcionamento também depende da fonte SEMOB.
+O link é público e não depende de manter este computador ligado. Desde 06/11/2026 o site está na **Vercel**, no plano gratuito Hobby: a página é servida como arquivo estático e a API roda como função na região de São Paulo (`gru1`). A região importa: a fonte da SEMOB não respondeu às consultas feitas a partir dos servidores da Vercel nos EUA. O funcionamento continua dependendo da disponibilidade da SEMOB.
 
-Enviar código ao GitHub não publica automaticamente uma nova versão no Sites. O GitHub guarda o código; a hospedagem é atualizada pelo fluxo de build e publicação do Sites. A configuração de publicação está em `site/.openai/hosting.json`, sem credenciais.
+Enviar código ao GitHub não publica automaticamente uma nova versão. Para publicar, dentro de `site/`:
+
+```sh
+npx vercel deploy --prod
+```
+
+A configuração está em `site/vercel.json` e `site/api/app.js`, sem credenciais. A versão anterior, no ChatGPT Sites (`site/.openai/hosting.json`), não é mais atualizada.

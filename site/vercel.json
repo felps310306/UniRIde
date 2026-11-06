@@ -1,0 +1,21 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "buildCommand": "npm run build && mkdir -p dist/static && cp index.html dist/static/index.html",
+  "outputDirectory": "dist/static",
+  "regions": ["gru1"],
+  "rewrites": [
+    { "source": "/api/:path*", "destination": "/api/app?__path=api/:path*" }
+  ],
+  "functions": {
+    "api/app.js": { "maxDuration": 60 }
+  },
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        { "key": "X-Content-Type-Options", "value": "nosniff" },
+        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" }
+      ]
+    }
+  ]
+}

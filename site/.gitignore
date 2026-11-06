@@ -7,3 +7,5 @@ dist/
 !.env.example
 .openai/*.tar.gz
 .openai/worker-starter/
+.vercel
+.env*

@@ -23,7 +23,8 @@ await rm(dist,{recursive:true,force:true});
 await mkdir(path.join(dist,'server'),{recursive:true});
 await mkdir(path.join(dist,'.openai'),{recursive:true});
 await writeFile(path.join(root,'index.html'),html);
-await writeFile(path.join(root,'..','APRESENTAR-UNIRIDE.html'),html);
+// Na Vercel só a pasta site é enviada; o arquivo de apresentação fica para o build local.
+if(!process.env.VERCEL)await writeFile(path.join(root,'..','APRESENTAR-UNIRIDE.html'),html);
 await build({absWorkingDir:root,entryPoints:['worker/index.js'],outfile:'dist/server/index.js',bundle:true,format:'esm',platform:'neutral',target:'es2022',charset:'utf8',minify:true,legalComments:'none',loader:{'.html':'text'}});
 await copyFile(path.join(root,'.openai/hosting.json'),path.join(dist,'.openai/hosting.json'));
 console.log(`Build pronto: HTML de apresentação (${Math.round(Buffer.byteLength(html)/1024)} KB) e Worker com API.`);
