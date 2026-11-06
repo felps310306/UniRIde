@@ -4,8 +4,8 @@ Referência autorizada: `C:/Projetos/EscalaCCO-front`. Revisão em 05/11/2026. O
 
 | Destino | Origem e adaptação |
 | --- | --- |
-| `NavBar.css` | `src/components/NavBar/NavBar.css`, copiado; ajustes do UniRide em `../app.css` |
-| `NavBar.jsx` | Estrutura/classes do NavBar original, destinos Mapa/Linhas/Favoritos, sem menus administrativos ou autenticação |
+| `NavBar.css` | Removido em 06/11/2026: a navegação passou para o cabeçalho e os estilos estão em `../design.css` |
+| `NavBar.jsx` | Classes do NavBar original, destinos Mapa/Linhas/Favoritos como abas do cabeçalho (barra inferior no celular), sem menus administrativos ou autenticação |
 | `Campos.css` | `src/styles/Campos.css`, incluindo select nativo estilizado e scrollbar |
 | `components/Form/SelectBusca.*` | Componentes originais importados diretamente em React |
 | `components/Paginacao/*` | Paginação original importada diretamente em React |

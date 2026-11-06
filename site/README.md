@@ -12,7 +12,7 @@ O projeto não oferece lotação, vagas, reservas ou previsão inventada de cheg
 
 ## Desenvolvimento
 
-O visual é definido em `src/design.css`, sobre os componentes CCO. A paleta clara/escura de `src/app.css` foi preservada. Inter compõe os textos e Bricolage Grotesque os títulos; ambas estão incluídas em `src/assets/fonts`, com licença OFL, e incorporadas no HTML para funcionar sem carregar fontes de terceiros. Transições respeitam a preferência de movimento reduzido.
+O visual é definido em `src/design.css`, sobre os componentes CCO: navegação no cabeçalho (barra inferior no celular), painel encaixado ao mapa e números de linha em placas. A paleta clara/escura de `src/app.css` foi preservada. Inter compõe a interface e Bricolage Grotesque apenas a marca; ambas estão incluídas em `src/assets/fonts`, com licença OFL, e incorporadas no HTML para funcionar sem carregar fontes de terceiros. Transições respeitam a preferência de movimento reduzido.
 
 ```sh
 npm run dev                     # build e servidor HTTP local

@@ -1,7 +1,8 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { FiArrowLeft, FiArrowRight, FiSearch, FiHeart, FiRefreshCw, FiMapPin, FiClock, FiInfo, FiX, FiMap, FiList, FiWifiOff, FiHelpCircle } from 'react-icons/fi';
+import { FiArrowLeft, FiArrowRight, FiSearch, FiHeart, FiRefreshCw, FiMapPin, FiClock, FiInfo, FiX, FiMap, FiList, FiWifiOff, FiHelpCircle, FiSun, FiMoon } from 'react-icons/fi';
 import { TbBus } from 'react-icons/tb';
 import NavBar from './cco/NavBar.jsx';
+import { useTheme } from './cco/ThemeContext.jsx';
 import SelectBusca from './cco/components/Form/SelectBusca.jsx';
 import Paginacao from './cco/components/Paginacao/Paginacao.jsx';
 import Toast from './cco/components/Toast/Toast.jsx';
@@ -21,12 +22,14 @@ function readFavorites(){try{return parseFavorites(localStorage.getItem(FAVORITE
 const timestamp=value=>value?new Date(value).toLocaleString('pt-BR',{timeZone:'America/Sao_Paulo',day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'}):'—';
 function ErrorState({message,retry,onHelp}){return <div className="error-state" role="alert"><FiWifiOff/><strong>Não foi possível consultar</strong><p>{message}</p><div className="recovery-actions"><button className="btn" onClick={retry}><FiRefreshCw/>Tentar novamente</button><button className="text-button" onClick={onHelp}>Ajuda com a consulta</button></div></div>;}
 function Loader(){return <div className="loading-state" role="status"><span className="spinner"/>Consultando a SEMOB…</div>;}
+function BrandMark(){return <svg className="brand-mark" viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="16"/><path d="M20 17v21c0 14 24 14 24 0V17"/></svg>;}
 
 export default function App(){
   const [origin,setOrigin]=useState(null);
   const [route,setRoute]=useState(()=>readRoute(location.hash,savedCampus()));
   const [query,setQuery]=useState(''),[target,setTarget]=useState(null),[tab,setTab]=useState('linhas'),[mobileView,setMobileView]=useState('lista'),[info,setInfo]=useState(false),[toast,setToast]=useState(null),[pagination,setPagination]=useState(0),[favorites,setFavorites]=useState(readFavorites),[clock,setClock]=useState(Date.now()),[date,setDate]=useState(todayBrasilia),[direction,setDirection]=useState(''),[online,setOnline]=useState(navigator.onLine);
   const searchRef=useRef(null),tabsRef=useRef([]),lastLineRef=useRef(null);
+  const {tema,alternarTema}=useTheme();
   const {page,campusId,line:lineCode}=route;
   const campus=CAMPUSES.find(c=>c.id===campusId);
   const changeRoute=(update,{replace=false}={})=>{const next={...route,...update};setRoute(next);history[replace?'replaceState':'pushState']({uniride:true},'',routeHash(next));};
@@ -72,13 +75,18 @@ export default function App(){
   const isSaved=code=>savedForCampus.some(f=>f.code===code);
   const lineRow=line=><div key={line.code} className="line-row"><button data-line={line.code} className="line-open" onClick={()=>chooseLine(line)} aria-label={`Ver linha ${line.code}`}><span className="line-number">{line.code}</span><span className="line-description"><strong>{line.name}</strong><small>{line.directions?.map(directionLabel).join(' · ')||'Favorita deste campus'}{line.distance!=null?origin?` · trajeto a ${line.distance} m de você · a ${line.destinationDistance} m do campus`:` · trajeto a ${line.distance} m do campus`:''}</small></span><FiArrowRight className="row-arrow"/></button><button className={`icon-btn favorite-btn ${isSaved(line.code)?'saved':''}`} aria-label={`${isSaved(line.code)?'Remover':'Adicionar'} linha ${line.code} ${isSaved(line.code)?'dos':'aos'} favoritos`} aria-pressed={isSaved(line.code)} onClick={()=>favorite(line)}><FiHeart/></button></div>;
   return <div className="cco-app-layout">
-    <NavBar page={page} onNavigate={navigate} onInfo={()=>setInfo(true)}/>
     <div className="app-frame">
-      <header className="app-header"><div className="header-title"><TbBus/><strong>UniRide</strong><span className="header-divider"/><span>Brasília · DF</span></div><div className="header-status" role="status" aria-live="polite"><span className={`source-dot ${!online||catalog.error||catalog.data?.stale||offline?'warn':''}`}/><span>{sourceState}</span><button className="icon-btn" aria-label="Ajuda e fontes" title="Ajuda e fontes" onClick={()=>setInfo(true)}><FiHelpCircle/></button></div></header>
+      <header className="app-header">
+        <a className="brand" href="#mapa" aria-label="UniRide, início" onClick={e=>{e.preventDefault();navigate('mapa');}}><BrandMark/><strong>UniRide</strong></a>
+        <span className="brand-place">Brasília · DF</span>
+        <NavBar page={page} onNavigate={navigate}/>
+        <div className="header-status" role="status" aria-live="polite"><span className={`source-dot ${!online||catalog.error||catalog.data?.stale||offline?'warn':''}`}/><span>{sourceState}</span></div>
+        <div className="header-tools"><button className="icon-btn" aria-label="Ajuda e fontes" title="Ajuda e fontes" onClick={()=>setInfo(true)}><FiHelpCircle/></button><button className="icon-btn" aria-label={tema==='dark'?'Usar tema claro':'Usar tema escuro'} title={tema==='dark'?'Tema claro':'Tema escuro'} onClick={alternarTema}>{tema==='dark'?<FiSun/>:<FiMoon/>}</button></div>
+      </header>
       {offline?<div className="offline-banner"><FiWifiOff/><span>Apresentação · amostra de {timestamp(catalog.data?.fetchedAt)}. Para dados atuais, <a href={SITE_URL}>abra a versão online</a>.</span></div>:!online && <div className="connection-banner" role="status"><FiWifiOff/>Sem conexão. As informações já carregadas continuam disponíveis. Reconecte para atualizar.</div>}
       <main id="main" tabIndex={-1} className={`workspace ${!showMap?'table-mode':''} mobile-${mobileView}`}>
         <aside className={`consultation-panel ${origin?'has-origin':''} ${selected?'has-detail':''}`} aria-label="Consulta de linhas">
-          <div className="panel-top"><div className="panel-heading"><span className="small-label">SEU CAMINHO ATÉ O CAMPUS</span><h1>{page==='favoritos'?'Linhas favoritas':page==='linhas'?'Linhas para o campus':'Chegar à faculdade'}</h1></div><button className="icon-btn" title="Atualizar consulta" aria-label="Atualizar consulta" disabled={needsOrigin||catalog.loading||offline||!online} onClick={refresh}><FiRefreshCw className={catalog.loading?'refreshing':''}/></button></div>
+          <div className="panel-top"><div className="panel-heading"><span className="small-label">Seu caminho até o campus</span><h1>{page==='favoritos'?'Linhas favoritas':page==='linhas'?'Linhas para o campus':'Chegar à faculdade'}</h1></div><button className="icon-btn" title="Atualizar consulta" aria-label="Atualizar consulta" disabled={needsOrigin||catalog.loading||offline||!online} onClick={refresh}><FiRefreshCw className={catalog.loading?'refreshing':''}/></button></div>
           <div className="journey-fields"><OriginPicker origin={origin} onChange={chooseOrigin} offline={offline}/>
           <CampusPicker campus={campus} onChange={chooseCampus}/></div>
           {needsOrigin?<div className="empty-panel origin-empty"><FiMapPin/><h2>Encontre uma parada perto de você</h2><p>Informe seu ponto de partida acima. Vamos buscar paradas próximas e linhas que também passam perto da faculdade escolhida.</p></div>:selected?<>
